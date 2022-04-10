@@ -1,15 +1,20 @@
-import { Image, BlitzPage } from "blitz"
-import logo from "public/logo.png"
-
+import { Image, BlitzPage, useQuery, GetServerSideProps, InferGetServerSidePropsType } from "blitz"
 import { useSession, signIn, signOut } from "next-auth/react"
 
-/*
- * This file is just for a pleasant getting started page for your new app.
- * You can delete everything in here and start from scratch if you like.
- */
+import logo from "public/logo.png"
+import getDetails from "app/auth/queries/getDetails"
+// import getSession from "app/auth/getSession"
 
-const Home: BlitzPage = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  // const session = await getSession({ req })
+  // console.log({ session })
+  return { props: {} }
+}
+
+const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   const { data: session } = useSession()
+  const [details] = useQuery(getDetails, undefined)
+  // console.log(details)
   return (
     <div className="container">
       <main>

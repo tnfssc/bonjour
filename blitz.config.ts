@@ -1,4 +1,5 @@
 import { BlitzConfig } from "blitz"
+import authMiddleware from "app/auth/middleware"
 
 const config: BlitzConfig = {
   /* Uncomment this to customize the webpack config
@@ -9,5 +10,6 @@ const config: BlitzConfig = {
     return config
   },
   */
+  middleware: [authMiddleware()],
 }
 module.exports = config
