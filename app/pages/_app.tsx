@@ -6,15 +6,23 @@ import {
   useQueryErrorResetBoundary,
 } from "blitz"
 
-export default function App({ Component, pageProps }: AppProps) {
+import { SessionProvider } from "next-auth/react"
+
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
+    // @ts-ignore
     <ErrorBoundary
       FallbackComponent={RootErrorFallback}
       onReset={useQueryErrorResetBoundary().reset}
     >
-      {getLayout(<Component {...pageProps} />)}
+      {getLayout(
+        <SessionProvider session={session}>
+          {/* @ts-ignore */}
+          <Component {...pageProps} />
+        </SessionProvider>
+      )}
     </ErrorBoundary>
   )
 }

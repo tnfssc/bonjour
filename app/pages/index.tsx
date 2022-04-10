@@ -1,15 +1,29 @@
 import { Image, BlitzPage } from "blitz"
 import logo from "public/logo.png"
 
+import { useSession, signIn, signOut } from "next-auth/react"
+
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
 
 const Home: BlitzPage = () => {
+  const { data: session } = useSession()
   return (
     <div className="container">
       <main>
+        {session ? (
+          <>
+            Signed in as {session.user?.email} <br />
+            <button onClick={() => signOut()}>Sign out</button>
+          </>
+        ) : (
+          <>
+            Not signed in <br />
+            <button onClick={() => signIn()}>Sign in</button>
+          </>
+        )}
         <div className="logo">
           <Image src={logo} alt="blitzjs" />
         </div>
