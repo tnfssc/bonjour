@@ -5,7 +5,7 @@ import {
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
 } from "blitz"
-
+import { Suspense } from "react"
 import { SessionProvider } from "next-auth/react"
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -18,10 +18,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       onReset={useQueryErrorResetBoundary().reset}
     >
       {getLayout(
-        <SessionProvider session={session}>
-          {/* @ts-ignore */}
-          <Component {...pageProps} />
-        </SessionProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <SessionProvider session={session}>
+            {/* @ts-ignore */}
+            <Component {...pageProps} />
+          </SessionProvider>
+        </Suspense>
       )}
     </ErrorBoundary>
   )

@@ -30,6 +30,7 @@
     "react-dom": "18.0.0-alpha-5ca4b0433-20211020"
   },
   "devDependencies": {
+    "@faker-js/faker": "6.1.2",
     "@types/react": "17.0.44",
     "eslint": "7.32.0",
     "husky": "7.0.4",
