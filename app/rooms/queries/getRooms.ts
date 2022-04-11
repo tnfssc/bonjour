@@ -1,9 +1,9 @@
 import { Ctx } from "blitz"
-import db from "db"
+import db, { RoomType } from "db"
 
 export type GetRoomsInput = {
   id?: number
-  suite?: Array<string>
+  suite?: Array<RoomType>
   number?: Array<string>
   capacity?: number
 }
