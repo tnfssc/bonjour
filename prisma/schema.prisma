@@ -85,24 +85,45 @@ model Customer {
   zip_code     String?
   country      String?
   reservations Reservation[]
+  valid        Boolean       @default(true)
 }
 
 model Room {
   id           Int           @id @default(autoincrement())
   number       String        @unique
-  suite        String        @default("Deluxe")
+  suite        RoomType      @default(Deluxe)
   capacity     Int           @default(2)
+  basePrice    BasePrice     @relation(fields: [suite, capacity], references: [suite, capacity])
   reservations Reservation[]
+  valid        Boolean       @default(true)
+}
+
+enum RoomType {
+  Deluxe
+  Premium
+  Luxury
+  Elite
+  VIP
+}
+
+model BasePrice {
+  suite      RoomType
+  capacity   Int
+  base_price BigInt
+
+  Room Room[]
+  @@id([suite, capacity])
 }
 
 model Reservation {
-  customer_id String
-  customer    Customer  @relation(fields: [customer_id], references: [id])
-  room_id     Int
-  room        Room      @relation(fields: [room_id], references: [id])
-  check_in    DateTime  @default(now())
-  check_out   DateTime?
-  price       Int       @default(0)
-
-  @@id([customer_id, room_id])
+  id           Int       @id @default(autoincrement())
+  customer_id  String
+  customer     Customer  @relation(fields: [customer_id], references: [id])
+  room_id      Int
+  room         Room      @relation(fields: [room_id], references: [id])
+  check_in     DateTime  @default(now())
+  check_out    DateTime?
+  bookingPrice BigInt // @default(room.basePrice.base_price * days)
+  price        Int       @default(0)
+  valid        Boolean   @default(true)
 }

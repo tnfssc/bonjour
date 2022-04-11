@@ -8,9 +8,9 @@ const sessionMiddleware = (): Middleware => async (req, res, next) => {
     const { id } = (await db.user.findUnique({ where: { email: session.user.email } }))!
     res.blitzCtx.user = { id, role: null }
     if (await db.manager.findUnique({ where: { id } }))
-      res.blitzCtx.user = { ...res.blitzCtx.user, ...session.user }
+      res.blitzCtx.user = { ...res.blitzCtx.user, ...session.user, role: "MANAGER" }
     else if (await db.customer.findUnique({ where: { id } }))
-      res.blitzCtx.user = { ...res.blitzCtx.user, ...session.user }
+      res.blitzCtx.user = { ...res.blitzCtx.user, ...session.user, role: "CUSTOMER" }
   }
   await next()
 }

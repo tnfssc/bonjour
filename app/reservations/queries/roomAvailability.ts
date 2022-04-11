@@ -1,7 +1,9 @@
 import { Ctx } from "blitz"
 import db, { Reservation } from "db"
 
-export type GetReservationInput = Omit<Reservation, "customer_id"> & { check_out: Date }
+export type GetReservationInput = Pick<Reservation, "room_id" | "check_in" | "check_out"> & {
+  check_out: Date
+}
 
 const roomAvailability = async (
   { room_id, check_in, check_out }: GetReservationInput,
@@ -10,8 +12,11 @@ const roomAvailability = async (
   const { user } = ctx
   if (!user) return
   if (user.role === "MANAGER") {
+    const room = await db.room.findUnique({ where: { id: room_id } })
+    if (!room?.valid) return false
     const reservations = await db.reservation.findMany({
       where: {
+        valid: true,
         room_id,
         OR: [
           {
