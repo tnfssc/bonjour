@@ -10,7 +10,8 @@ export type DeleteCustomerInput = { id: string; email?: never } | { email: strin
 const deleteCustomer = async ({ email, id }: DeleteCustomerInput, ctx: Ctx) => {
   const { user } = ctx
   if (!user) return
-  if (user.role === "MANAGER") return (await api.get<Customer>("/", { params: { id, email } })).data
+  if (user.role === "MANAGER")
+    return (await api.delete<Customer>("/", { params: { id, email } })).data
 }
 
 export default deleteCustomer
