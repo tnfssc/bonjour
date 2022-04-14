@@ -6,11 +6,10 @@
     "build": "blitz build",
     "start": "blitz start",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
-    "migrate": "blitz prisma migrate dev",
-    "postmigrate": "blitz prisma generate",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prepare": "husky install"
+    "prepare": "husky install && yarn setup",
+    "setup": "git submodule update --recursive && rm -rf ./prisma && cp -r ./db-man/prisma ./prisma"
   },
   "prettier": {
     "semi": false,

@@ -1,0 +1,3 @@
+[submodule "db-man"]
+	path = db-man
+	url = https://github.com/tnfssc/bonjourOS_db-man.git
