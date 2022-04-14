@@ -54,3 +54,4 @@ lib-cov
 .vercel
 
 nocodb.sh
+prisma
