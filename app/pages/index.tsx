@@ -7,14 +7,12 @@ import getDetails from "app/auth/queries/getDetails"
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   // const session = await getSession({ req })
-  // console.log({ session })
   return { props: {} }
 }
 
 const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   const { data: session } = useSession()
   const [details] = useQuery(getDetails, undefined)
-  // console.log(details)
   return (
     <div className="container">
       <main>

@@ -8,7 +8,7 @@ export type AddEditRoomInput = {
   capacity?: number
 }
 
-const addEditRoom = async ({ capacity, number, id, suite }: AddEditRoomInput, ctx: Ctx) => {
+const addEditRoom = async ({ id, suite, capacity, number }: AddEditRoomInput, ctx: Ctx) => {
   const { user } = ctx
   if (!user || user.role !== "MANAGER") return
   return await db.room.upsert({
