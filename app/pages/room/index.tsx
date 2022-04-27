@@ -1,25 +1,16 @@
-import { Head, Ctx, ErrorComponent, useMutation, useQuery } from "blitz"
-import { RoomType } from "db"
-import addEditRoom from "../../rooms/mutations/addEditRoom.ts"
+import { Head, useMutation } from "blitz"
+import addEditRoom from "app/rooms/mutations/addEditRoom"
 import React from "react"
 import Button from "@mui/material/Button"
 import Roomcard from "../utilities/editRoom"
 import { styled } from "@material-ui/core/styles"
-import Dialog from "@material-ui/core/Dialog"
+import Dialog, { DialogProps } from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
-import DialogContent from "@material-ui/core/DialogContent"
 import DialogActions from "@material-ui/core/DialogActions"
-import IconButton from "@material-ui/core/IconButton"
+import IconButton from "@mui/material/IconButton"
 import CloseIcon from "@material-ui/icons/Close"
-import Typography from "@material-ui/core/Typography"
-// import Box from "@material-ui/core/Box"
 import Box from "@mui/material/Box"
 import TextField from "@material-ui/core/TextField"
-import Input from "@material-ui/core/Input"
-import Card from "@material-ui/core/Card"
-import CardActions from "@material-ui/core/CardActions"
-import CardContent from "@material-ui/core/CardContent"
-import CardMedia from "@material-ui/core/CardMedia"
 
 // ------------------------------------------------------
 // This page is rendered if a route match is not found
@@ -32,7 +23,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
-}))
+})) as React.FC<DialogProps>
 
 export interface DialogTitleProps {
   id: string
@@ -44,7 +35,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle style={{ margin: 0, padding: 2 }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -81,9 +72,9 @@ function AddRoom() {
   }
   const handleSubmit = async (event) => {
     mutation({
-      id: NUmber(event.target.id.value),
+      id: Number(event.target.id.value),
       suite: event.target.suite.value,
-      number: Number(event.target.number.value),
+      number: `${event.target.number.value}`,
       capacity: Number(event.target.capacity.value),
     })
     event.preventDefault()

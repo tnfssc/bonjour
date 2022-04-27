@@ -1,19 +1,18 @@
 import { Head, Ctx, ErrorComponent, useMutation, useQuery, useParams } from "blitz"
 import { RoomType } from "db"
-import addEditRoom from "../../rooms/mutations/addEditRoom.ts"
-import getRooms from "../../rooms/queries/getRooms"
+import addEditRoom from "app/rooms/mutations/addEditRoom"
+import getRooms from "app/rooms/queries/getRooms"
 import React from "react"
 import Button from "@mui/material/Button"
 import Roomcard from "../utilities/editRoom"
 import { styled } from "@material-ui/core/styles"
-import Dialog from "@material-ui/core/Dialog"
+import Dialog, { DialogProps } from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogActions from "@material-ui/core/DialogActions"
-import IconButton from "@material-ui/core/IconButton"
+import IconButton from "@mui/material/IconButton"
 import CloseIcon from "@material-ui/icons/Close"
 import Typography from "@material-ui/core/Typography"
-// import Box from "@material-ui/core/Box"
 import Box from "@mui/material/Box"
 import TextField from "@material-ui/core/TextField"
 import Input from "@material-ui/core/Input"
@@ -34,7 +33,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
-}))
+})) as React.FC<DialogProps>
 
 export interface DialogTitleProps {
   id: string
@@ -46,7 +45,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle style={{ margin: 0, padding: 2 }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -71,9 +70,9 @@ function Reservations(props) {
     <div>
       <Box sx={{ maxWidth: 400 }}>
         {" "}
-        <Card sx={{ display: "flex" }}>
+        <Card style={{ display: "flex" }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <CardContent sx={{ flex: "1 0 auto" }}>
+            <CardContent style={{ flex: "1 0 auto" }}>
               <Typography component="div" variant="h5">
                 From: {props.checkin}
               </Typography>
