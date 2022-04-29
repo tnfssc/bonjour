@@ -9,7 +9,6 @@ const availableRooms = async (
   ctx: Ctx
 ) => {
   const { user } = ctx
-  console.log(user)
   if (!user) return
   if (user.role === "CUSTOMER" || user.role === "MANAGER")
     return await db.room.findMany({

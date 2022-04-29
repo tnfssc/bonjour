@@ -1,5 +1,6 @@
 import { Head, useMutation, useQuery } from "blitz"
 import addEditCustomer from "app/customers/mutations/addEditCustomer"
+import getAllCustomers from "app/customers/queries/getAllCustomers"
 import availableRooms from "app/reservations/queries/availableRooms"
 import CustomerCard from "../utilities/customerCard"
 import React from "react"
@@ -52,6 +53,16 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
     </DialogTitle>
   )
 }
+function AllCustomers() {
+  const [customers] = useQuery(getAllCustomers, {})
+  const allCustomers = customers?.map((customer) => (
+    <Box key={customer.id} sx={{ maxWidth: 350 }}>
+      <CustomerCard data={customer} />
+    </Box>
+  ))
+
+  return <div>{allCustomers}</div>
+}
 
 export default function Customers() {
   const [open, setOpen] = React.useState(false)
@@ -63,6 +74,7 @@ export default function Customers() {
     setOpen(false)
   }
   const handleSubmit = (event) => {
+    //TODO. Not working
     mutation({
       id: Number(event.target.id.value),
       firstName: event.target.name.value,
@@ -76,7 +88,7 @@ export default function Customers() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Add Custommer
+        Add Customer
       </Button>
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
@@ -85,24 +97,28 @@ export default function Customers() {
 
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
           <TextField
+            required
             //onChange={handleChange}
 
             label="ID"
             name="id"
           />
           <TextField
+            required
             //onChange={handleChange}
 
             label="Name"
             name="name"
           />
           <TextField
+            required
             // onChange={handleChange}
 
             label="Mobile Number"
             name="phone"
           />
           <TextField
+            required
             // onChange={handleChange}
 
             label="Email"
@@ -116,13 +132,8 @@ export default function Customers() {
           </DialogActions>
         </form>
       </BootstrapDialog>
-      <break />
-
-      <Box sx={{ width: 340 }}>
-        <CustomerCard
-          data={{ id: 2, name: "Raviteja Namani", number: "9381629505", email: "ravi@xyz" }}
-        />
-      </Box>
+      <b />
+      <AllCustomers />
     </div>
   )
 }

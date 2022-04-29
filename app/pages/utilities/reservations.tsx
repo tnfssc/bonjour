@@ -1,12 +1,12 @@
 import { Head, Ctx, ErrorComponent, useMutation, useQuery, useParams } from "blitz"
 import { RoomType } from "db"
-import addEditRoom from "app/rooms/mutations/addEditRoom"
 import getCustomer from "app/customers/queries/getCustomer"
+import CustomerCard from "./customerCard"
 import getRooms from "app/rooms/queries/getRooms"
 import getReservations from "app/reservations/queries/getReservations"
 import React from "react"
 import Button from "@mui/material/Button"
-import Roomcard from "../utilities/roomCard"
+import Roomcard from "./roomCard"
 import { styled } from "@material-ui/core/styles"
 import Dialog, { DialogProps } from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
@@ -69,22 +69,15 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 function Reservations(props) {
-  const [customerDet] = useQuery(getCustomer, { id: props.data.customer_id })
   return (
     <div>
-      <Box sx={{ maxWidth: 400 }}>
+      <Box sx={{ maxWidth: 400, margin: 5 }}>
         {" "}
-        <Card style={{ display: "flex" }}>
+        <Card style={{ display: "flex", margin: 2 }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent style={{ flex: "1 0 auto" }}>
-              <Typography component="div" variant="h3">
-                Reservation Id: {props.data.id}
-              </Typography>
               <Typography component="div" variant="h5">
                 Room No. {props.data.room_id}
-              </Typography>
-              <Typography component="div" variant="h6">
-                Customer Name: {customerDet?.firstName}
               </Typography>
               <b />
               <Typography variant="body2" color="textSecondary">
@@ -97,10 +90,10 @@ function Reservations(props) {
               <Typography variant="body2" color="textSecondary">
                 Check Out: {props.data.check_out ? props.data.check_out.toString() : null}
               </Typography>
-              <a href={"/customer/" + props.data.customer_id}>
-                <Button>Show Customer Details</Button>
-              </a>
             </CardContent>
+            <a href={"/room/" + props.data.room_id}>
+              <Button>Room Details</Button>
+            </a>
           </Box>
         </Card>
       </Box>
@@ -108,10 +101,8 @@ function Reservations(props) {
   )
 }
 
-export default function Details() {
-  const roomId = useParams()
-  const [roomDetails] = useQuery(getRooms, { id: Number(roomId.id) })
-  const [reservations] = useQuery(getReservations, { room_id: Number(roomId.id) })
+export default function AllReservations() {
+  const [reservations] = useQuery(getReservations, {})
   const allReservations = reservations?.map((res) => <Reservations key={res.id} data={res} />)
 
   return (
@@ -119,9 +110,7 @@ export default function Details() {
       <Head>
         <title>Our App</title>
       </Head>
-      <Box sx={{ maxWidth: 350 }}>
-        <Roomcard data={roomDetails} />
-      </Box>{" "}
+
       <h1>Reservations:</h1>
       <b></b>
       <>{allReservations}</>

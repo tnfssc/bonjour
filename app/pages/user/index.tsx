@@ -4,7 +4,7 @@ import AddReservation from "../utilities/addReservation"
 import getAllRooms from "app/rooms/queries/getAllRooms"
 import React from "react"
 import Button from "@mui/material/Button"
-import Roomcard from "../utilities/roomCard"
+import UserRoomCard from "../utilities/userRoomCard"
 import { styled } from "@material-ui/core/styles"
 import Dialog, { DialogProps } from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
@@ -13,11 +13,11 @@ import IconButton from "@mui/material/IconButton"
 import CloseIcon from "@material-ui/icons/Close"
 import Box from "@material-ui/core/Box"
 import TextField from "@material-ui/core/TextField"
+import AllReservations from "../utilities/reservations"
 
 // ------------------------------------------------------
 // This page is rendered if a route match is not found
 // ------------------------------------------------------
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -25,7 +25,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
-})) as React.FC<DialogProps>
+}))
 
 export interface DialogTitleProps {
   id: string
@@ -37,7 +37,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   const { children, onClose, ...other } = props
 
   return (
-    <DialogTitle style={{ margin: 0, padding: 2 }} {...other}>
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -57,10 +57,8 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   )
 }
 
-function AddRoom() {
+function ShowReservations() {
   const [open, setOpen] = React.useState(false)
-  const [mutation] = useMutation(addEditRoom)
-  const [allRooms] = useQuery(getAllRooms, {})
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -68,89 +66,39 @@ function AddRoom() {
   const handleClose = () => {
     setOpen(false)
   }
-  const handleSubmit = async (event) => {
-    mutation({
-      id: Number(event.target.id.value),
-      suite: event.target.suite.value,
-      number: `${event.target.number.value}`,
-      capacity: Number(event.target.capacity.value),
-    })
-    event.preventDefault()
-  }
-  const displayRooms = allRooms?.map((room) => (
-    <Box key={room.id} sx={{ maxWidth: 350 }}>
-      <Roomcard data={room} />
-    </Box>
-  ))
 
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Add Room
+        All Reservations
       </Button>
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Add Room
+          All Reservations
         </BootstrapDialogTitle>
-
-        <form style={{ margin: 10 }} onSubmit={handleSubmit}>
-          <TextField
-            required
-            //onChange={handleChange}
-
-            label="ID"
-            name="id"
-            type="number"
-          />
-          <TextField
-            required
-            //onChange={handleChange}
-
-            label="suite"
-            name="suite"
-          />
-          <TextField
-            required
-            // onChange={handleChange}
-
-            label="Number"
-            name="number"
-            type="number"
-          />
-          <TextField
-            required
-            // onChange={handleChange}
-
-            label="Capacity"
-            name="capacity"
-            type="number"
-          />
-
-          <DialogActions>
-            <Button autoFocus type="submit" value="Submit" onClick={handleClose}>
-              Save changes
-            </Button>
-          </DialogActions>
-        </form>
-        <b />
+        <AllReservations />
       </BootstrapDialog>
 
       <b />
-      <AddReservation />
-      <b />
-
-      {displayRooms}
     </div>
   )
 }
 
-export default function Room() {
+export default function DisplayRooms() {
+  const [allRooms] = useQuery(getAllRooms, {})
+
+  const displayRooms = allRooms?.map((room) => (
+    <Box key={room.id} sx={{ maxWidth: 350 }}>
+      <UserRoomCard data={room} />
+    </Box>
+  ))
   return (
     <>
       <Head>
         <title>Our App</title>
       </Head>
-      <AddRoom />
+      <ShowReservations />
+      <div>{displayRooms}</div>
     </>
   )
 }

@@ -86,7 +86,7 @@ function CancelReservation() {
         </BootstrapDialogTitle>
 
         <form style={{ margin: 10 }} onSubmit={handleCancel}>
-          <TextField label="Reservation Id" name="id" type="number" />
+          <TextField required label="Reservation Id" name="id" type="number" />
 
           <DialogActions>
             <Button autoFocus type="submit" value="Submit" onClick={handleClose}>
@@ -127,7 +127,7 @@ function DeleteReservation() {
         </BootstrapDialogTitle>
 
         <form style={{ margin: 10 }} onSubmit={handleCancel}>
-          <TextField label="Reservation Id" name="id" type="number" />
+          <TextField required label="Reservation Id" name="id" type="number" />
 
           <DialogActions>
             <Button autoFocus type="submit" value="Submit" onClick={handleClose}>
@@ -153,11 +153,12 @@ function EditReservation() {
 
   const handleCancel = (event) => {
     editMutation({
-      id: event.target.id.value,
+      id: Number(event.target.id.value),
       customer_id: event.target.customer_id.value,
       rooom_id: Number(event.target.rooom_id.value),
       check_in: event.target.check_in.value,
       check_out: event.target.id.value,
+      bookingPrice: Number(event.target.bookingPrice.value),
     })
     event.preventDefault()
   }
@@ -174,10 +175,11 @@ function EditReservation() {
         </BootstrapDialogTitle>
 
         <form style={{ margin: 10 }} onSubmit={handleCancel}>
-          <TextField label="Reservation Id" name="id" type="number" />
-          <TextField label="Customer Id" name="customer_id" />
-          <TextField label="Room Id" name="room_id" type="number" />
+          <TextField required label="Reservation Id" name="id" type="number" />
+          <TextField required label="Customer Id" name="customer_id" />
+          <TextField required label="Room Id" name="room_id" type="number" />
           <TextField
+            required
             label="Check In"
             name="check_in"
             type="date"
@@ -186,9 +188,19 @@ function EditReservation() {
             }}
           />
           <TextField
+            required
             label="Check Out"
             name="check_out"
             type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            required
+            label="Booking Price"
+            name="bookingPrice"
+            type="number"
             InputLabelProps={{
               shrink: true,
             }}
@@ -222,6 +234,7 @@ export default function AddReservation() {
       room_id: Number(event.target.room_id.value),
       check_in: event.target.check_in.value + "T00:00:00.000Z",
       check_out: event.target.check_out.value + "T00:00:00.000Z",
+      bookingPrice: Number(event.target.bookingPrice.value),
     })
     event.preventDefault()
   }
@@ -237,9 +250,10 @@ export default function AddReservation() {
         </BootstrapDialogTitle>
 
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
-          <TextField label="Customer ID" name="customer_id" />
-          <TextField label="Room Id" name="room_id" type="number" />
+          <TextField required label="Customer ID" name="customer_id" />
+          <TextField required label="Room Id" name="room_id" type="number" />
           <TextField
+            required
             label="Check In Date"
             name="check_in"
             type="date"
@@ -248,9 +262,19 @@ export default function AddReservation() {
             }}
           />
           <TextField
+            required
             label="Check Out date"
             name="check_out"
             type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            required
+            label="Booking Price"
+            name="bookingPrice"
+            type="number"
             InputLabelProps={{
               shrink: true,
             }}
