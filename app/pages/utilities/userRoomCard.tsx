@@ -138,11 +138,7 @@ function UserRoomCard(props) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {props.data ? (
-            <a href={"/room/" + props.data.id}> Room No: {props.data.number}</a>
-          ) : (
-            <div>Room No.</div>
-          )}
+          Room No: {props.data.number}
         </Typography>
         <Typography variant="body2" color="textSecondary">
           {props.data.suite}

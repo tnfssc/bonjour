@@ -11,7 +11,7 @@ export type GetRoomsInput = {
 const getRooms = async ({ capacity, number, id, suite }: GetRoomsInput, ctx: Ctx) => {
   const { user } = ctx
   if (!user) return
-  if (user.role !== "MANAGER") return await db.room.findUnique({ where: { id } })
+  // if (user.role !== "MANAGER") return await db.room.findUnique({ where: { id } })
   if (id) return await db.room.findUnique({ where: { id } })
   return await db.room.findMany({
     where: { suite: { in: suite }, capacity: { gte: capacity }, number: { in: number } },

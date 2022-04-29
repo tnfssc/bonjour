@@ -24,7 +24,7 @@ import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import { useSearchParams } from "react-router-dom"
 import { Numbers } from "@mui/icons-material"
-
+import cancelReservation from "app/reservations/mutations/cancelReservation"
 // ------------------------------------------------------
 // This page is rendered if a route match is not found
 // ------------------------------------------------------
@@ -69,6 +69,11 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 function Reservations(props) {
+  const [mutation] = useMutation(cancelReservation)
+  const handleCancel = (event) => {
+    mutation({ id: props.data.id })
+  }
+
   return (
     <div>
       <Box sx={{ maxWidth: 400, margin: 5 }}>
@@ -94,6 +99,7 @@ function Reservations(props) {
             <a href={"/room/" + props.data.room_id}>
               <Button>Room Details</Button>
             </a>
+            <Button>Cancel Reservation</Button>
           </Box>
         </Card>
       </Box>
