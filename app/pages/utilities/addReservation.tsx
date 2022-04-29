@@ -70,7 +70,7 @@ function CancelReservation() {
   }
 
   const handleCancel = (event) => {
-    cancelMutation({ id: event.target.id.value })
+    cancelMutation({ id: Number(event.target.id.value) })
     event.preventDefault()
   }
   return (
@@ -111,7 +111,7 @@ function DeleteReservation() {
   }
 
   const handleCancel = (event) => {
-    deleteMutation({ id: event.target.id.value })
+    deleteMutation({ id: Number(event.target.id.value) })
     event.preventDefault()
   }
   return (
@@ -155,7 +155,7 @@ function EditReservation() {
     editMutation({
       id: event.target.id.value,
       customer_id: event.target.customer_id.value,
-      rooom_id: event.target.rooom_id.value,
+      rooom_id: Number(event.target.rooom_id.value),
       check_in: event.target.check_in.value,
       check_out: event.target.id.value,
     })
@@ -175,7 +175,7 @@ function EditReservation() {
 
         <form style={{ margin: 10 }} onSubmit={handleCancel}>
           <TextField label="Reservation Id" name="id" type="number" />
-          <TextField label="Customer Id" name="customer_id" type="number" />
+          <TextField label="Customer Id" name="customer_id" />
           <TextField label="Room Id" name="room_id" type="number" />
           <TextField
             label="Check In"
@@ -218,10 +218,10 @@ export default function AddReservation() {
   }
   const handleSubmit = async (event) => {
     mutation({
-      customer_id: Number(event.target.customer_id.value),
-      room_id: event.target.room_id.value,
-      check_in: Date(event.target.check_in.value),
-      check_out: Date(event.target.check_out.value),
+      customer_id: event.target.customer_id.value,
+      room_id: Number(event.target.room_id.value),
+      check_in: event.target.check_in.value + "T00:00:00.000Z",
+      check_out: event.target.check_out.value + "T00:00:00.000Z",
     })
     event.preventDefault()
   }
@@ -237,7 +237,7 @@ export default function AddReservation() {
         </BootstrapDialogTitle>
 
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
-          <TextField label="Customer ID" name="customer_id" type="number" />
+          <TextField label="Customer ID" name="customer_id" />
           <TextField label="Room Id" name="room_id" type="number" />
           <TextField
             label="Check In Date"
