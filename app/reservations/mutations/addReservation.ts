@@ -25,17 +25,28 @@ export type AddReservationInput = Reservation & { check_out: Date }
 //     return await db.reservation.create({ data: { customer_id, ...rest } })
 // }
 
-const addReservation = async ({ customer_id, ...rest }: AddReservationInput, ctx: Ctx) => {
+const addReservation = async (
+  { customer_id, bookingPrice, ...rest }: AddReservationInput,
+  ctx: Ctx
+) => {
   const { user } = ctx
   if (!user) return
   // @TODO: payment
   if (user.role === "CUSTOMER")
-    return await (
-      await api.post<Reservation>("/1", { customer_id: user.id, ...rest })
+    return (
+      await api.post<Reservation>("/1", {
+        customer_id: user.id,
+        bookingPrice: parseInt(`${bookingPrice}`),
+        ...rest,
+      })
     ).data
   if (user.role === "MANAGER")
-    return await (
-      await api.post<Reservation>("/1", { customer_id, ...rest })
+    return (
+      await api.post<Reservation>("/1", {
+        customer_id,
+        bookingPrice: parseInt(`${bookingPrice}`),
+        ...rest,
+      })
     ).data
 }
 

@@ -30,7 +30,7 @@ export type EditReservationInput = Reservation & { check_out: Date }
 // }
 
 const editReservation = async (
-  { customer_id, room_id, id, ...rest }: EditReservationInput,
+  { customer_id, room_id, bookingPrice, id, ...rest }: EditReservationInput,
   ctx: Ctx
 ) => {
   const { user } = ctx
@@ -43,8 +43,14 @@ const editReservation = async (
   )
     return
   if (user.role === "MANAGER")
-    return await (
-      await api.post<Reservation>("/2", { customer_id, room_id, id, ...rest })
+    return (
+      await api.post<Reservation>("/2", {
+        customer_id,
+        room_id,
+        bookingPrice: parseInt(`${bookingPrice}`),
+        id,
+        ...rest,
+      })
     ).data
 }
 
