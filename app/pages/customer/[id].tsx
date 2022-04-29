@@ -1,7 +1,7 @@
 import { Head, Ctx, ErrorComponent, useMutation, useQuery, useParams } from "blitz"
 import { RoomType } from "db"
-import addEditRoom from "app/rooms/mutations/addEditRoom"
 import getCustomer from "app/customers/queries/getCustomer"
+import CustomerCard from "../utilities/customerCard"
 import getRooms from "app/rooms/queries/getRooms"
 import getReservations from "app/reservations/queries/getReservations"
 import React from "react"
@@ -70,8 +70,6 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 
 function Reservations(props) {
   console.log(props.data)
-  const [customerDet] = useQuery(getCustomer, { id: props.data.customer_id })
-  console.log(customerDet)
   return (
     <div>
       <Box sx={{ maxWidth: 400 }}>
@@ -79,14 +77,8 @@ function Reservations(props) {
         <Card style={{ display: "flex" }}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent style={{ flex: "1 0 auto" }}>
-              <Typography component="div" variant="h2">
-                Reservation Id: {props.data.id}
-              </Typography>
-              <Typography component="div" variant="h4">
+              <Typography component="div" variant="h5">
                 Room No. {props.data.room_id}
-              </Typography>
-              <Typography component="div" variant="h6">
-                Customer Name: {customerDet?.firstName}
               </Typography>
               <b />
               <Typography variant="body2" color="textSecondary">
@@ -99,10 +91,8 @@ function Reservations(props) {
               <Typography variant="body2" color="textSecondary">
                 Check Out: {props.data.check_out ? props.data.check_out.toString() : null}
               </Typography>
-              <a href={"/customer/" + props.data.customer_id}>
-                <Button>Show Customer Details</Button>
-              </a>
             </CardContent>
+            <a href={"/room/" + props.data.room_id}>Room Details</a>
           </Box>
         </Card>
       </Box>
@@ -110,11 +100,11 @@ function Reservations(props) {
   )
 }
 
-export default function Details() {
-  const roomId = useParams()
-  const [roomDetails] = useQuery(getRooms, { id: Number(roomId.id) })
-  const [reservations] = useQuery(getReservations, { room_id: Number(roomId.id) })
-  console.log(reservations)
+export default function CustomerDetails() {
+  const customerId = useParams()
+  const [customerDets] = useQuery(getCustomer, { id: customerId.id })
+  console.log(customerDets)
+  const [reservations] = useQuery(getReservations, { customer_id: customerId.id })
   const allReservations = reservations?.map((res) => <Reservations data={res} />)
 
   return (
@@ -123,7 +113,7 @@ export default function Details() {
         <title>Our App</title>
       </Head>
       <Box sx={{ maxWidth: 350 }}>
-        <Roomcard data={roomDetails} />
+        <CustomerCard data={customerDets} />
       </Box>{" "}
       <h1>Reservations:</h1>
       <b></b>
