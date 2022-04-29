@@ -5,10 +5,10 @@ export type DeleteRoomInput = {
   id: number
 }
 
-const addEditRoom = async ({ id }: DeleteRoomInput, ctx: Ctx) => {
+const deleteRoom = async ({ id }: DeleteRoomInput, ctx: Ctx) => {
   const { user } = ctx
   if (!user || user.role !== "MANAGER") return
   return await db.room.delete({ where: { id } })
 }
 
-export default addEditRoom
+export default deleteRoom
