@@ -15,9 +15,6 @@ const addReservation = async ({ customer_id, ...rest }: AddReservationInput, ctx
     ))
   )
     return
-  // @TODO: payment
-  if (user.role === "CUSTOMER")
-    return await db.reservation.create({ data: { customer_id: user.id, ...rest } })
   if (user.role === "MANAGER")
     return await db.reservation.create({ data: { customer_id, ...rest } })
 }
