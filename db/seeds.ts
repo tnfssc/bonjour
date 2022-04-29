@@ -28,27 +28,28 @@ const seed = async () => {
     ],
     skipDuplicates: true,
   })
-  const users = new Array(0).map(() => ({
+  const users = new Array(10).fill(0).map(() => ({
     id: faker.datatype.uuid(),
     name: faker.name.findName(),
     email: faker.internet.email(),
     firstName: faker.name.findName(),
     phone: faker.phone.phoneNumber(),
   }))
+  console.log(users)
+  await db.user.createMany({
+    data: users.map(({ email, id, name }) => ({
+      id,
+      name: name,
+      email: email,
+    })),
+    skipDuplicates: true,
+  })
   await db.account.createMany({
     data: users.map(({ id }) => ({
       provider: "seed",
       providerAccountId: "NaN",
       type: "test",
       userId: id,
-    })),
-    skipDuplicates: true,
-  })
-  await db.user.createMany({
-    data: users.map(({ email, id, name }) => ({
-      id,
-      name: name,
-      email: email,
     })),
     skipDuplicates: true,
   })
