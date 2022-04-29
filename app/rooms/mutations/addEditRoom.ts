@@ -3,7 +3,7 @@ import db, { RoomType } from "db"
 import api from "../service"
 
 export type AddEditRoomInput = {
-  id: number
+  id?: number
   suite?: RoomType
   number: string
   capacity?: number
@@ -22,7 +22,7 @@ const addEditRoom = async ({ id, suite, capacity, number }: AddEditRoomInput, ct
   const { user } = ctx
   if (!user) return
   if (user.role === "MANAGER")
-    return (await api.post<AddEditRoomInput[]>("/", { suite, capacity, number })).data
+    return (await api.post<AddEditRoomInput[]>("/", { id, suite, capacity, number })).data
 }
 
 export default addEditRoom
