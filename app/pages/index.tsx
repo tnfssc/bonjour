@@ -34,6 +34,12 @@ const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
           <strong>Congrats!</strong> Your app is ready.
         </p>
         <div className="buttons" style={{ marginTop: "5rem" }}>
+          <a className="button" href="/room" target="_blank" rel="noopener noreferrer">
+            All Rooms
+          </a>
+          <a className="button" href="/customer" target="_blank" rel="noopener noreferrer">
+            All customers
+          </a>
           <a className="button" href="/user" target="_blank" rel="noopener noreferrer">
             All Available Rooms
           </a>
