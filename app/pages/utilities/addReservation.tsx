@@ -155,9 +155,9 @@ function EditReservation() {
     editMutation({
       id: Number(event.target.id.value),
       customer_id: event.target.customer_id.value,
-      rooom_id: Number(event.target.rooom_id.value),
-      check_in: event.target.check_in.value,
-      check_out: event.target.id.value,
+      room_id: Number(event.target.room_id.value),
+      check_in: event.target.check_in.value + "T00:00:00.000Z",
+      check_out: event.target.check_out.value + "T00:00:00.000Z",
       bookingPrice: Number(event.target.bookingPrice.value),
     })
     event.preventDefault()

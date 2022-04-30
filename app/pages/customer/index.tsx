@@ -76,7 +76,6 @@ export default function Customers() {
   const handleSubmit = (event) => {
     //TODO. Not working
     mutation({
-      id: Number(event.target.id.value),
       firstName: event.target.name.value,
       phone: event.target.phone.value,
       email: event.target.email.value,
@@ -96,13 +95,6 @@ export default function Customers() {
         </BootstrapDialogTitle>
 
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
-          <TextField
-            required
-            //onChange={handleChange}
-
-            label="ID"
-            name="id"
-          />
           <TextField
             required
             //onChange={handleChange}
