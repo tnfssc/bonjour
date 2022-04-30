@@ -77,7 +77,12 @@ function EditRoom(props) {
     setOpen(false)
   }
   const handleSubmit = (event) => {
-    mutation({ id, suite, number, capacity })
+    mutation({
+      id: Number(event.target.id.value),
+      suite: event.target.suite.value,
+      number: `${event.target.number.value}`,
+      capacity: Number(event.target.capacity.value),
+    })
     event.preventDefault()
   }
 
@@ -92,6 +97,7 @@ function EditRoom(props) {
         </BootstrapDialogTitle>
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
           <TextField
+            required
             //onChange={handleChange}
 
             label="suite"
@@ -99,6 +105,7 @@ function EditRoom(props) {
             defaultValue={props.data.suite}
           />
           <TextField
+            required
             // onChange={handleChange}
 
             label="Number"
@@ -106,6 +113,7 @@ function EditRoom(props) {
             defaultValue={props.data.number}
           />
           <TextField
+            required
             // onChange={handleChange}
 
             label="Capacity"
@@ -119,7 +127,6 @@ function EditRoom(props) {
             </Button>
           </DialogActions>
         </form>
-        <break />
       </BootstrapDialog>
     </div>
   )
@@ -128,7 +135,7 @@ function EditRoom(props) {
 function Roomcard(props) {
   if (props.data)
     return (
-      <Card sx={{ maxWidth: 350 }}>
+      <Card sx={{ maxWidth: 350, margin: 2 }}>
         <CardMedia
           component="img"
           height="140"
@@ -138,7 +145,7 @@ function Roomcard(props) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {props.data ? (
-              <a href={"/room/" + props.data.id}> Room No: {props.data.id}</a>
+              <a href={"/room/" + props.data.id}> Room No: {props.data.number}</a>
             ) : (
               <div>Room No.</div>
             )}
@@ -147,7 +154,7 @@ function Roomcard(props) {
             {props.data.suite}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Floor: {props.data.number}
+            Room Id: {props.data.id}
           </Typography>
           <Typography variant="body2" color="textSecondary">
             Capacity: {props.data.capacity}

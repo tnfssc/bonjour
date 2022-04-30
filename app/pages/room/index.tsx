@@ -1,7 +1,7 @@
 import { Head, useMutation, useParams, useQuery } from "blitz"
 import addEditRoom from "app/rooms/mutations/addEditRoom"
 import AddReservation from "../utilities/addReservation"
-import availableRooms from "app/reservations/queries/availableRooms"
+import getAllRooms from "app/rooms/queries/getAllRooms"
 import React from "react"
 import Button from "@mui/material/Button"
 import Roomcard from "../utilities/roomCard"
@@ -60,7 +60,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 function AddRoom() {
   const [open, setOpen] = React.useState(false)
   const [mutation] = useMutation(addEditRoom)
-  const [allRooms] = useQuery(availableRooms, { check_in: "2030-01-20T00:00:00.000Z" })
+  const [allRooms] = useQuery(getAllRooms, {})
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -95,6 +95,7 @@ function AddRoom() {
 
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
           <TextField
+            required
             //onChange={handleChange}
 
             label="ID"
@@ -102,12 +103,14 @@ function AddRoom() {
             type="number"
           />
           <TextField
+            required
             //onChange={handleChange}
 
             label="suite"
             name="suite"
           />
           <TextField
+            required
             // onChange={handleChange}
 
             label="Number"
@@ -115,6 +118,7 @@ function AddRoom() {
             type="number"
           />
           <TextField
+            required
             // onChange={handleChange}
 
             label="Capacity"

@@ -35,7 +35,6 @@ const seed = async () => {
     firstName: faker.name.findName(),
     phone: faker.phone.phoneNumber(),
   }))
-  console.log(users)
   await db.user.createMany({
     data: users.map(({ email, id, name }) => ({
       id,

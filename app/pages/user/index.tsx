@@ -1,11 +1,10 @@
-import { Head, useMutation, useQuery } from "blitz"
-import addEditCustomer from "app/customers/mutations/addEditCustomer"
-import getAllCustomers from "app/customers/queries/getAllCustomers"
-import availableRooms from "app/reservations/queries/availableRooms"
-import CustomerCard from "../utilities/customerCard"
+import { Head, useMutation, useParams, useQuery } from "blitz"
+import addEditRoom from "app/rooms/mutations/addEditRoom"
+import AddReservation from "../utilities/addReservation"
+import getAllRooms from "app/rooms/queries/getAllRooms"
 import React from "react"
 import Button from "@mui/material/Button"
-import Roomcard from "../utilities/roomCard"
+import UserRoomCard from "../utilities/userRoomCard"
 import { styled } from "@material-ui/core/styles"
 import Dialog, { DialogProps } from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
@@ -14,7 +13,11 @@ import IconButton from "@mui/material/IconButton"
 import CloseIcon from "@material-ui/icons/Close"
 import Box from "@material-ui/core/Box"
 import TextField from "@material-ui/core/TextField"
+import AllReservations from "../utilities/reservations"
 
+// ------------------------------------------------------
+// This page is rendered if a route match is not found
+// ------------------------------------------------------
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -53,79 +56,49 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
     </DialogTitle>
   )
 }
-function AllCustomers() {
-  const [customers] = useQuery(getAllCustomers, {})
-  const allCustomers = customers?.map((customer) => (
-    <Box key={customer.id} sx={{ maxWidth: 350 }}>
-      <CustomerCard data={customer} />
-    </Box>
-  ))
 
-  return <div>{allCustomers}</div>
-}
-
-export default function Customers() {
+function ShowReservations() {
   const [open, setOpen] = React.useState(false)
-  const [mutation] = useMutation(addEditCustomer)
+
   const handleClickOpen = () => {
     setOpen(true)
   }
   const handleClose = () => {
     setOpen(false)
   }
-  const handleSubmit = (event) => {
-    //TODO. Not working
-    mutation({
-      firstName: event.target.name.value,
-      phone: event.target.phone.value,
-      email: event.target.email.value,
-    })
-
-    event.preventDefault()
-  }
 
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Add Customer
+        All Reservations
       </Button>
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Customer Details
+          All Reservations
         </BootstrapDialogTitle>
-
-        <form style={{ margin: 10 }} onSubmit={handleSubmit}>
-          <TextField
-            required
-            //onChange={handleChange}
-
-            label="Name"
-            name="name"
-          />
-          <TextField
-            required
-            // onChange={handleChange}
-
-            label="Mobile Number"
-            name="phone"
-          />
-          <TextField
-            required
-            // onChange={handleChange}
-
-            label="Email"
-            name="email"
-          />
-
-          <DialogActions>
-            <Button autoFocus type="submit" value="Submit" onClick={handleClose}>
-              Save changes
-            </Button>
-          </DialogActions>
-        </form>
+        <AllReservations />
       </BootstrapDialog>
+
       <b />
-      <AllCustomers />
     </div>
+  )
+}
+
+export default function DisplayRooms() {
+  const [allRooms] = useQuery(getAllRooms, {})
+
+  const displayRooms = allRooms?.map((room) => (
+    <Box key={room.id} sx={{ maxWidth: 350 }}>
+      <UserRoomCard data={room} />
+    </Box>
+  ))
+  return (
+    <>
+      <Head>
+        <title>Our App</title>
+      </Head>
+      <ShowReservations />
+      <div>{displayRooms}</div>
+    </>
   )
 }

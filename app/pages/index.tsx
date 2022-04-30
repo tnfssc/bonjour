@@ -34,29 +34,14 @@ const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
           <strong>Congrats!</strong> Your app is ready.
         </p>
         <div className="buttons" style={{ marginTop: "5rem" }}>
-          <a
-            className="button"
-            href="https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+          <a className="button" href="/room" target="_blank" rel="noopener noreferrer">
+            All Rooms
           </a>
-          <a
-            className="button-outline"
-            href="https://github.com/blitz-js/blitz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Github Repo
+          <a className="button" href="/customer" target="_blank" rel="noopener noreferrer">
+            All customers
           </a>
-          <a
-            className="button-outline"
-            href="https://discord.blitzjs.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Discord Community
+          <a className="button" href="/user" target="_blank" rel="noopener noreferrer">
+            All Available Rooms
           </a>
         </div>
       </main>

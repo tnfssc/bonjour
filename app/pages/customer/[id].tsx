@@ -69,7 +69,6 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 function Reservations(props) {
-  console.log(props.data)
   return (
     <div>
       <Box sx={{ maxWidth: 400 }}>
@@ -103,9 +102,8 @@ function Reservations(props) {
 export default function CustomerDetails() {
   const customerId = useParams()
   const [customerDets] = useQuery(getCustomer, { id: customerId.id })
-  console.log(customerDets)
   const [reservations] = useQuery(getReservations, { customer_id: customerId.id })
-  const allReservations = reservations?.map((res) => <Reservations data={res} />)
+  const allReservations = reservations?.map((res) => <Reservations key={res.id} data={res} />)
 
   return (
     <div style={{ margin: 20 }}>
