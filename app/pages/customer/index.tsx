@@ -1,4 +1,17 @@
-import { Head, useMutation, useQuery } from "blitz"
+import {
+  Head,
+  useMutation,
+  useQuery,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  useRouter,
+} from "blitz"
+import { useSession, signIn, signOut } from "next-auth/react"
+
+import logo from "public/logo.png"
+import getDetails from "app/auth/queries/getDetails"
+import getSession from "app/auth/getSession"
+
 import addEditCustomer from "app/customers/mutations/addEditCustomer"
 import getAllCustomers from "app/customers/queries/getAllCustomers"
 import availableRooms from "app/reservations/queries/availableRooms"
@@ -24,6 +37,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }))
 
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req })
+  return {
+    props: {
+      role: session?.user?.["role"] as string,
+    },
+  }
+}
 export interface DialogTitleProps {
   id: string
   children?: React.ReactNode
@@ -64,7 +85,10 @@ function AllCustomers() {
   return <div>{allCustomers}</div>
 }
 
-export default function Customers() {
+export default function Customers(props) {
+  const router = useRouter()
+  if (props.role === "CUSTOMER") router.push("/user")
+
   const [open, setOpen] = React.useState(false)
   const [mutation] = useMutation(addEditCustomer)
   const handleClickOpen = () => {

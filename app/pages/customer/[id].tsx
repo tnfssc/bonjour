@@ -1,5 +1,17 @@
-import { Head, Ctx, ErrorComponent, useMutation, useQuery, useParams } from "blitz"
+import {
+  Head,
+  useMutation,
+  useQuery,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  useRouter,
+} from "blitz"
 import { RoomType } from "db"
+import { useSession, signIn, signOut } from "next-auth/react"
+import logo from "public/logo.png"
+import getDetails from "app/auth/queries/getDetails"
+import getSession from "app/auth/getSession"
+
 import getCustomer from "app/customers/queries/getCustomer"
 import CustomerCard from "../utilities/customerCard"
 import getRooms from "app/rooms/queries/getRooms"
@@ -28,6 +40,14 @@ import { Numbers } from "@mui/icons-material"
 // ------------------------------------------------------
 // This page is rendered if a route match is not found
 // ------------------------------------------------------
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req })
+  return {
+    props: {
+      role: session?.user?.["role"] as string,
+    },
+  }
+}
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

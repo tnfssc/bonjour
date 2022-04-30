@@ -13,9 +13,10 @@ const getReservations = async (
   if (!user) return
   if (user.role === "CUSTOMER")
     return await db.reservation.findMany({ where: { customer_id: user.id, id, room_id, valid } })
+      .data
   if (user.role === "MANAGER")
     if (!customer_id || !room_id || !id)
-      return await db.reservation.findMany({ where: { customer_id, room_id, id, valid } })
+      return (await db.reservation.findMany({ where: { customer_id, room_id, id, valid } })).data
 }
 
 export default getReservations

@@ -3,14 +3,18 @@ import { useSession, signIn, signOut } from "next-auth/react"
 
 import logo from "public/logo.png"
 import getDetails from "app/auth/queries/getDetails"
-// import getSession from "app/auth/getSession"
+import getSession from "app/auth/getSession"
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  // const session = await getSession({ req })
-  return { props: {} }
+  const session = await getSession({ req })
+  return {
+    props: {
+      role: session?.user?.["role"] as string,
+    },
+  }
 }
 
-const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
+const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ role }) => {
   const { data: session } = useSession()
   const [details] = useQuery(getDetails, undefined)
   return (
