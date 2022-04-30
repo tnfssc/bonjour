@@ -89,7 +89,7 @@ export default function DisplayRooms() {
   console.log(allRooms)
   const displayRooms = allRooms?.map((room) => (
     <Box key={room.id} sx={{ maxWidth: 350 }}>
-      {/* <UserRoomCard data={room} /> */}
+      <UserRoomCard data={room} />
     </Box>
   ))
   return (
@@ -98,7 +98,7 @@ export default function DisplayRooms() {
         <title>Our App</title>
       </Head>
       <ShowReservations />
-      {/*<div>{displayRooms}</div> */}
+      <div>{displayRooms}</div>
     </>
   )
 }

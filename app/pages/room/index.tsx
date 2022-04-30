@@ -69,12 +69,14 @@ function AddRoom() {
     setOpen(false)
   }
   const handleSubmit = async (event) => {
-    mutation({
-      id: Number(event.target.id.value),
-      suite: event.target.suite.value,
-      number: `${event.target.number.value}`,
-      capacity: Number(event.target.capacity.value),
-    })
+    console.log(
+      mutation({
+        id: Number(event.target.id.value),
+        suite: event.target.suite.value,
+        number: `${event.target.number.value}`,
+        capacity: Number(event.target.capacity.value),
+      })
+    )
     event.preventDefault()
   }
   const displayRooms = allRooms?.map((room) => (
