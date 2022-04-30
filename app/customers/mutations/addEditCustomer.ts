@@ -5,7 +5,7 @@ import { Ctx } from "blitz"
 import { Customer } from "db"
 import api from "../service"
 
-export type AddEditCustomerInput = Customer
+export type AddEditCustomerInput = Partial<Customer>
 
 // const addEditCustomer = async (
 //   { id, firstName, phone, ...rest }: AddEditCustomerInput,
