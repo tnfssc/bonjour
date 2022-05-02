@@ -43,9 +43,10 @@ import { Numbers } from "@mui/icons-material"
 // ------------------------------------------------------
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req })
+  console.log(session)
   return {
     props: {
-      role: session?.user?.["role"] as string,
+      role: session?.["role"] as string,
     },
   }
 }
