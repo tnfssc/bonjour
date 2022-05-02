@@ -63,7 +63,6 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 }
 
 function EditRoom(props) {
-  const id = props.data.id
   const [suite, setSuite] = React.useState(null)
   const [number, setNumber] = React.useState(null)
   const [capacity, setCapacity] = React.useState(null)
@@ -76,9 +75,10 @@ function EditRoom(props) {
   const handleClose = () => {
     setOpen(false)
   }
+
   const handleSubmit = (event) => {
     mutation({
-      id: Number(event.target.id.value),
+      id: props.data.id,
       suite: event.target.suite.value,
       number: `${event.target.number.value}`,
       capacity: Number(event.target.capacity.value),
@@ -93,7 +93,7 @@ function EditRoom(props) {
       </Button>
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Edit Room No. {id}
+          Edit Room Id: {props.data.id}
         </BootstrapDialogTitle>
         <form style={{ margin: 10 }} onSubmit={handleSubmit}>
           <TextField

@@ -146,7 +146,8 @@ function AddRoom() {
   )
 }
 
-export default function Room() {
+export default function Room(props) {
+  console.log(props)
   return (
     <>
       <Head>

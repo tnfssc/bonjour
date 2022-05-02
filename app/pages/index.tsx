@@ -1,4 +1,11 @@
-import { Image, BlitzPage, useQuery, GetServerSideProps, InferGetServerSidePropsType } from "blitz"
+import {
+  Image,
+  BlitzPage,
+  useQuery,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  useRouter,
+} from "blitz"
 import { useSession, signIn, signOut } from "next-auth/react"
 
 import logo from "public/logo.png"
@@ -16,7 +23,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 const Home: BlitzPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ role }) => {
   const { data: session } = useSession()
+  // const router = useRouter()
+  // if (role === "CUSTOMER") router.push("/user")
   const [details] = useQuery(getDetails, undefined)
+
   return (
     <div className="container">
       <main>

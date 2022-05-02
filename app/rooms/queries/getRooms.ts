@@ -9,7 +9,7 @@ export type GetRoomsInput = {
   capacity?: number
 }
 
-/* const getRooms = async ({ capacity, number, id, suite }: GetRoomsInput, ctx: Ctx) => {
+const getRooms = async ({ capacity, number, id, suite }: GetRoomsInput, ctx: Ctx) => {
   const { user } = ctx
   if (!user) return
   // if (user.role !== "MANAGER") return await db.room.findUnique({ where: { id } })
@@ -17,16 +17,16 @@ export type GetRoomsInput = {
   return await db.room.findMany({
     where: { suite: { in: suite }, capacity: { gte: capacity }, number: { in: number } },
   })
-} */
-
-const getRooms = async (
-  { capacity, number, id, suite }: GetRoomsInput,
-  ctx: Ctx
-): Promise<GetRoomsInput | null | undefined> => {
-  const { user } = ctx
-  if (!user) return
-  if (user.role === "CUSTOMER") return (await api.get("/", { params: { id } })).data
-  if (user.role === "MANAGER") return (await api.get("/", { params: { id } })).data
 }
+
+// const getRooms = async (
+//   { capacity, number, id, suite }: GetRoomsInput,
+//   ctx: Ctx
+// ): Promise<GetRoomsInput | null | undefined> => {
+//   const { user } = ctx
+//   if (!user) return
+//   if (user.role === "CUSTOMER") return (await api.get("/", { params: { id } })).data
+//   if (user.role === "MANAGER") return (await api.get("/", { params: { id } })).data
+// }
 
 export default getRooms

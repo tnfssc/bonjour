@@ -9,7 +9,7 @@ export type AddEditRoomInput = {
   capacity?: number
 }
 
-/* const addEditRoom = async ({ id, suite, capacity, number }: AddEditRoomInput, ctx: Ctx) => {
+const addEditRoom = async ({ id, suite, capacity, number }: AddEditRoomInput, ctx: Ctx) => {
   const { user } = ctx
   if (!user || user.role !== "MANAGER") return
   return await db.room.upsert({
@@ -17,12 +17,13 @@ export type AddEditRoomInput = {
     create: { suite, capacity, number },
     update: { suite, capacity, number },
   })
-} */
-const addEditRoom = async ({ id, suite, capacity, number }: AddEditRoomInput, ctx: Ctx) => {
-  const { user } = ctx
-  if (!user) return
-  if (user.role === "MANAGER")
-    return (await api.post<AddEditRoomInput[]>("/", { id, suite, capacity, number })).data
 }
+
+// const addEditRoom = async ({ id, suite, capacity, number }: AddEditRoomInput, ctx: Ctx) => {
+//   const { user } = ctx
+//   if (!user) return
+//   if (user.role === "MANAGER")
+//     return (await api.post<AddEditRoomInput[]>("/", { id, suite, capacity, number })).data
+// }
 
 export default addEditRoom

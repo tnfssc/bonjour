@@ -123,7 +123,7 @@ function Reservations(props) {
 export default function CustomerDetails() {
   const customerId = useParams()
 
-  const [customerDets] = useQuery(getCustomer, { id: customerrId.id })
+  const [customerDets] = useQuery(getCustomer, { id: customerId.id })
   const [reservations] = useQuery(getReservations, { customer_id: customerId.id })
   console.log(reservations)
   const allReservations = reservations?.map((res) => <Reservations key={res.id} data={res} />)

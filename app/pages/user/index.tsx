@@ -86,7 +86,7 @@ function ShowReservations() {
 
 export default function DisplayRooms() {
   const [allRooms] = useQuery(getAllRooms, {})
-  console.log(allRooms)
+
   const displayRooms = allRooms?.map((room) => (
     <Box key={room.id} sx={{ maxWidth: 350 }}>
       <UserRoomCard data={room} />

@@ -1,7 +1,6 @@
 import { Ctx } from "blitz"
 import db, { Reservation } from "db"
 
-// import { Reservation } from "db"
 import api from "../service"
 
 export type CancelReservationInput = Pick<Reservation, "id">
@@ -31,8 +30,7 @@ const cancelReservation = async ({ id }: CancelReservationInput, ctx: Ctx) => {
 //       return await api.get<Reservation>("/4", { id }).data
 //     }
 //   }
-//   if (user.role === "MANAGER")
-//     return await api.get<Reservation>("/4", { id }).data
+//   if (user.role === "MANAGER") return await api.get<Reservation>("/4", { id }).data
 
 //   // @TODO Refund
 // }

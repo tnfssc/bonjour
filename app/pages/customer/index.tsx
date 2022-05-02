@@ -37,14 +37,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }))
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getSession({ req })
-  return {
-    props: {
-      role: session?.user?.["role"] as string,
-    },
-  }
-}
 export interface DialogTitleProps {
   id: string
   children?: React.ReactNode
@@ -85,10 +77,7 @@ function AllCustomers() {
   return <div>{allCustomers}</div>
 }
 
-export default function Customers(props) {
-  const router = useRouter()
-  if (props.role === "CUSTOMER") router.push("/user")
-
+function ShowCustomers(props) {
   const [open, setOpen] = React.useState(false)
   const [mutation] = useMutation(addEditCustomer)
   const handleClickOpen = () => {
@@ -100,9 +89,11 @@ export default function Customers(props) {
   const handleSubmit = (event) => {
     //TODO. Not working
     mutation({
+      id: event.target.id.value,
+
       firstName: event.target.name.value,
       phone: event.target.phone.value,
-      email: event.target.email.value,
+      address: event.target.address.value,
     })
 
     event.preventDefault()
@@ -123,6 +114,13 @@ export default function Customers(props) {
             required
             //onChange={handleChange}
 
+            label="ID"
+            name="id"
+          />
+          <TextField
+            required
+            //onChange={handleChange}
+
             label="Name"
             name="name"
           />
@@ -137,8 +135,8 @@ export default function Customers(props) {
             required
             // onChange={handleChange}
 
-            label="Email"
-            name="email"
+            label="Address"
+            name="address"
           />
 
           <DialogActions>
@@ -150,6 +148,27 @@ export default function Customers(props) {
       </BootstrapDialog>
       <b />
       <AllCustomers />
+    </div>
+  )
+}
+// export const getServerSideProps: GetServerSideProps = async (req) => {
+//   const session = await getSession(req)
+//   console.log(session)
+//   return {
+//     props: {
+//       role: session?.user,
+//     },
+//   }
+// }
+export default function Customers(props) {
+  // const router = useRouter()
+
+  //if (props.role === "CUSTOMER") router.push("/user")
+
+  // console.log(props)
+  return (
+    <div>
+      <ShowCustomers />
     </div>
   )
 }

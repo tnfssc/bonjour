@@ -99,7 +99,7 @@ function Reservations(props) {
             <a href={"/room/" + props.data.room_id}>
               <Button>Room Details</Button>
             </a>
-            <Button>Cancel Reservation</Button>
+            <Button onClick={handleCancel}>Cancel Reservation</Button>
           </Box>
         </Card>
       </Box>

@@ -111,7 +111,7 @@ function DeleteReservation() {
   }
 
   const handleCancel = (event) => {
-    deleteMutation({ id: Number(event.target.id.value) })
+    console.log({ id: Number(event.target.id.value) })
     event.preventDefault()
   }
   return (
